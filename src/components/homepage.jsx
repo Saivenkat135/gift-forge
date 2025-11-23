@@ -8,16 +8,20 @@ function Homepage() {
   const [showMenu, setShowMenu] = useState(false);
 
   const products = [
-    { id: 1, name: 'Wireless Headphones', price: 79.99, image: '🎧', category: 'Electronics', rating: 4.8 },
-    { id: 2, name: 'Smart Watch', price: 199.99, image: '⌚', category: 'Electronics', rating: 4.9 },
-    { id: 3, name: 'Laptop', price: 999.99, image: '💻', category: 'Electronics', rating: 4.7 },
-    { id: 4, name: 'Camera', price: 599.99, image: '📷', category: 'Electronics', rating: 4.6 },
-    { id: 5, name: 'Tablet', price: 399.99, image: '📱', category: 'Electronics', rating: 4.5 },
-    { id: 6, name: 'Gaming Console', price: 499.99, image: '🎮', category: 'Gaming', rating: 4.9 },
-    { id: 7, name: 'USB-C Cable', price: 19.99, image: '🔌', category: 'Accessories', rating: 4.4 },
-    { id: 8, name: 'Phone Case', price: 24.99, image: '📦', category: 'Accessories', rating: 4.3 },
-    { id: 9, name: 'Portable Speaker', price: 89.99, image: '🔊', category: 'Audio', rating: 4.7 },
-  ];
+  { id: 1, name: 'Custom Photo Frame', price: 499.99, image: '🖼️', category: 'Personalized Gifts', rating: 4.9 },
+  { id: 2, name: 'Printed Coffee Mug', price: 249.99, image: '☕', category: 'Personalized Gifts', rating: 4.8 },
+  { id: 3, name: 'Engraved Wooden Plaque', price: 799.99, image: '🪵', category: 'Wooden Engraving', rating: 4.9 },
+  { id: 4, name: 'Custom LED Name Lamp', price: 1299.99, image: '💡', category: 'LED Gifts', rating: 4.7 },
+  { id: 5, name: 'Personalized Cushion Print', price: 399.99, image: '🛏️', category: 'Home Decor', rating: 4.6 },
+  { id: 6, name: 'Custom Keychain (Photo/Text)', price: 149.99, image: '🔑', category: 'Accessories', rating: 4.5 },
+  { id: 7, name: 'Custom Phone Case (Photo Print)', price: 299.99, image: '📱', category: 'Accessories', rating: 4.7 },
+  { id: 8, name: '3D Crystal Photo Lamp', price: 1999.99, image: '💎', category: 'LED Gifts', rating: 4.8 },
+  { id: 9, name: 'Personalized Calendar (Photo Based)', price: 349.99, image: '📅', category: 'Stationery', rating: 4.4 },
+  { id: 10, name: 'Custom T-Shirt Print', price: 499.99, image: '👕', category: 'Wearables', rating: 4.6 },
+  { id: 11, name: 'Custom Couple Caricature', price: 999.99, image: '🎨', category: 'Art & Illustration', rating: 4.9 },
+  { id: 12, name: 'Engraved Metal Pen', price: 199.99, image: '🖊️', category: 'Office Gifts', rating: 4.5 },
+];
+
 
   const addToCart = (product) => {
     const existingItem = cart.find(item => item.id === product.id);
@@ -54,7 +58,7 @@ function Homepage() {
         <div className="w-full mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
           <button onClick={() => { setCurrentPage('landing'); setShowMenu(false); }} className="text-xl sm:text-2xl font-bold hover:opacity-90 transition flex items-center gap-2 group">
             <Sparkles className="w-6 h-6 text-amber-400 group-hover:rotate-180 transition-transform duration-500" />
-            <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">ShopHub</span>
+            <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">Gift-Forge</span>
           </button>
           
           <div className="hidden md:flex gap-2 lg:gap-6 flex-1 justify-center">
@@ -149,7 +153,7 @@ function Homepage() {
         </div>
         
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4 sm:mb-6 relative">
-          Welcome to <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 bg-clip-text text-transparent animate-pulse">ShopHub</span>
+          Welcome to <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 bg-clip-text text-transparent animate-pulse">Gift_forge</span>
           <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/0 via-amber-400/20 to-amber-400/0 blur-xl"></div>
         </h1>
         
@@ -334,7 +338,7 @@ function Homepage() {
                   <span className="text-slate-600 text-sm">• {product.category}</span>
                 </div>
                 <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mt-4">
-                  <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">${product.price}</span>
+                  <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">₹{product.price}</span>
                   <button
                     onClick={() => addToCart(product)}
                     className="bg-gradient-to-r from-amber-500 to-amber-400 text-slate-900 font-bold px-4 py-2 rounded-lg hover:from-amber-400 hover:to-amber-300 transition text-sm sm:text-base shadow-lg shadow-amber-500/50 relative overflow-hidden group/btn"
@@ -372,7 +376,7 @@ function Homepage() {
                     <span className="text-4xl">{item.image}</span>
                     <div className="text-left">
                       <h3 className="font-bold text-base sm:text-lg text-white">{item.name}</h3>
-                      <p className="text-amber-400 text-sm sm:text-base">${item.price}</p>
+                      <p className="text-amber-400 text-sm sm:text-base">₹{item.price}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 sm:gap-4">
@@ -389,15 +393,15 @@ function Homepage() {
               <div className="space-y-3 sm:space-y-4 mb-6">
                 <div className="flex justify-between text-slate-400 text-sm sm:text-base">
                   <span>Subtotal:</span>
-                  <span>${totalPrice.toFixed(2)}</span>
+                  <span>₹{totalPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-slate-400 text-sm sm:text-base">
                   <span>Shipping:</span>
-                  <span>$10.00</span>
+                  <span>₹10.00</span>
                 </div>
                 <div className="border-t border-slate-700 pt-3 sm:pt-4 flex justify-between font-bold text-base sm:text-lg">
                   <span className="text-white">Total:</span>
-                  <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">${(totalPrice + 10).toFixed(2)}</span>
+                  <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">₹{(totalPrice + 10).toFixed(2)}</span>
                 </div>
               </div>
               <button onClick={() => setCurrentPage('payment')} className="w-full bg-gradient-to-r from-amber-500 to-amber-400 text-slate-900 font-bold py-2 sm:py-3 rounded-lg hover:from-amber-400 hover:to-amber-300 transition text-sm sm:text-base shadow-lg shadow-amber-500/50 relative overflow-hidden group">
@@ -497,22 +501,22 @@ function Homepage() {
                 {cart.map(item => (
                   <div key={item.id} className="flex justify-between text-slate-400 text-sm sm:text-base">
                     <span>{item.name} x{item.quantity}</span>
-                    <span>${(item.price * item.quantity).toFixed(2)}</span>
+                    <span>₹{(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 ))}
               </div>
               <div className="border-t border-slate-700 space-y-3 pt-4 mb-6">
                 <div className="flex justify-between text-slate-400 text-sm sm:text-base">
                   <span>Subtotal:</span>
-                  <span>${totalPrice.toFixed(2)}</span>
+                  <span>₹{totalPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-slate-400 text-sm sm:text-base">
                   <span>Shipping:</span>
-                  <span>$10.00</span>
+                  <span>₹10.00</span>
                 </div>
                 <div className="flex justify-between font-bold text-base sm:text-lg">
                   <span className="text-white">Total:</span>
-                  <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">${(totalPrice + 10).toFixed(2)}</span>
+                  <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">₹{(totalPrice + 10).toFixed(2)}</span>
                 </div>
               </div>
 
@@ -535,11 +539,11 @@ function Homepage() {
   const AboutPage = () => (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-8 sm:py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-6 sm:mb-8">About ShopHub</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-6 sm:mb-8">About Gift-Forge</h1>
         <div className="bg-slate-800 border border-amber-500/20 rounded-xl shadow-2xl p-6 sm:p-8 space-y-6 sm:space-y-8">
           <section>
             <h2 className="text-xl sm:text-2xl font-bold text-amber-400 mb-3 sm:mb-4">Our Mission</h2>
-            <p className="text-slate-300 leading-relaxed text-sm sm:text-base">At ShopHub, we're dedicated to bringing you the best selection of products at unbeatable prices. Our mission is to make online shopping convenient, affordable, and enjoyable for everyone.</p>
+            <p className="text-slate-300 leading-relaxed text-sm sm:text-base">At Gift-Forge, we're dedicated to bringing you the best selection of products at unbeatable prices. Our mission is to make online shopping convenient, affordable, and enjoyable for everyone.</p>
           </section>
           <section>
             <h2 className="text-xl sm:text-2xl font-bold text-amber-400 mb-3 sm:mb-4">Why Choose Us?</h2>
@@ -562,7 +566,7 @@ function Homepage() {
           </section>
           <section>
             <h2 className="text-xl sm:text-2xl font-bold text-amber-400 mb-3 sm:mb-4">Contact Us</h2>
-            <p className="text-slate-300 text-sm sm:text-base">Email: support@shophub.com<br />Phone: 1-800-SHOP-HUB<br />Address: 123 Shopping Street, Commerce City, CC 12345</p>
+            <p className="text-slate-300 text-sm sm:text-base">Email: support@giftforge.com<br />Phone: 1-800-GIFT-FORGE<br />Address: 123 Shopping Street, Commerce City, CC 12345</p>
           </section>
         </div>
       </div>

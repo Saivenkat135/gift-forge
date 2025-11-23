@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Color Picker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .color-display {
+            width: 100%;
+            height: 200px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 3px solid #fff;
+        }
+
+        .color-display:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .controls {
+            margin-bottom: 30px;
+        }
+
+        .slider-group {
+            margin-bottom: 25px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .slider-value {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #e0e0e0, #e0e0e0);
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]:hover {
+            height: 10px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        #redSlider {
+            background: linear-gradient(to right, #000, #ff0000);
+        }
+
+        #greenSlider {
+            background: linear-gradient(to right, #000, #00ff00);
+        }
+
+        #blueSlider {
+            background: linear-gradient(to right, #000, #0000ff);
+        }
+
+        #alphaSlider {
+            background: linear-gradient(to right, transparent, #000);
+        }
+
+        .output-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .output-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .output-item:hover {
+            background: #fff;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .output-label {
+            font-size: 0.85em;
+            color: #888;
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .output-value {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            color: #333;
+            font-weight: 700;
+            word-break: break-all;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .output-value:hover::after {
+            content: 'Click to copy';
+            position: absolute;
+            top: -25px;
+            left: 0;
+            background: #333;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-family: 'Segoe UI', sans-serif;
+            white-space: nowrap;
+        }
+
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            font-weight: 600;
+        }
+
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .output-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Color Picker</h1>
+        
+        <div class="color-display" id="colorDisplay"></div>
+        
+        <div class="controls">
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span>Red</span>
+                    <span class="slider-value" id="redValue">128</span>
+                </div>
+                <input type="range" id="redSlider" min="0" max="255" value="128">
+            </div>
+            
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span>Green</span>
+                    <span class="slider-value" id="greenValue">128</span>
+                </div>
+                <input type="range" id="greenSlider" min="0" max="255" value="128">
+            </div>
+            
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span>Blue</span>
+                    <span class="slider-value" id="blueValue">128</span>
+                </div>
+                <input type="range" id="blueSlider" min="0" max="255" value="128">
+            </div>
+            
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span>Alpha</span>
+                    <span class="slider-value" id="alphaValue">1.00</span>
+                </div>
+                <input type="range" id="alphaSlider" min="0" max="100" value="100">
+            </div>
+        </div>
+        
+        <div class="output-grid">
+            <div class="output-item">
+                <div class="output-label">RGB</div>
+                <div class="output-value" id="rgbOutput" onclick="copyToClipboard(this.textContent, 'RGB')">rgb(128, 128, 128)</div>
+            </div>
+            
+            <div class="output-item">
+                <div class="output-label">RGBA</div>
+                <div class="output-value" id="rgbaOutput" onclick="copyToClipboard(this.textContent, 'RGBA')">rgba(128, 128, 128, 1)</div>
+            </div>
+            
+            <div class="output-item">
+                <div class="output-label">HEX</div>
+                <div class="output-value" id="hexOutput" onclick="copyToClipboard(this.textContent, 'HEX')">#808080</div>
+            </div>
+            
+            <div class="output-item">
+                <div class="output-label">HSL</div>
+                <div class="output-value" id="hslOutput" onclick="copyToClipboard(this.textContent, 'HSL')">hsl(0, 0%, 50%)</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="copy-notification" id="notification"></div>
+
+    <script>
+        const redSlider = document.getElementById('redSlider');
+        const greenSlider = document.getElementById('greenSlider');
+        const blueSlider = document.getElementById('blueSlider');
+        const alphaSlider = document.getElementById('alphaSlider');
+        
+        const redValue = document.getElementById('redValue');
+        const greenValue = document.getElementById('greenValue');
+        const blueValue = document.getElementById('blueValue');
+        const alphaValue = document.getElementById('alphaValue');
+        
+        const colorDisplay = document.getElementById('colorDisplay');
+        const rgbOutput = document.getElementById('rgbOutput');
+        const rgbaOutput = document.getElementById('rgbaOutput');
+        const hexOutput = document.getElementById('hexOutput');
+        const hslOutput = document.getElementById('hslOutput');
+        
+        function updateColor() {
+            const r = parseInt(redSlider.value);
+            const g = parseInt(greenSlider.value);
+            const b = parseInt(blueSlider.value);
+            const a = (parseInt(alphaSlider.value) / 100).toFixed(2);
+            
+            redValue.textContent = r;
+            greenValue.textContent = g;
+            blueValue.textContent = b;
+            alphaValue.textContent = a;
+            
+            const rgba = `rgba(${r}, ${g}, ${b}, ${a})`;
+            const rgb = `rgb(${r}, ${g}, ${b})`;
+            colorDisplay.style.backgroundColor = rgba;
+            
+            rgbOutput.textContent = rgb;
+            rgbaOutput.textContent = rgba;
+            
+            const hex = '#' + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+            hexOutput.textContent = hex.toUpperCase();
+            
+            const hsl = rgbToHsl(r, g, b);
+            hslOutput.textContent = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+        }
+        
+        function rgbToHsl(r, g, b) {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+            
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                
+                switch (max) {
+                    case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+                    case g: h = ((b - r) / d + 2) / 6; break;
+                    case b: h = ((r - g) / d + 4) / 6; break;
+                }
+            }
+            
+            return {
+                h: Math.round(h * 360),
+                s: Math.round(s * 100),
+                l: Math.round(l * 100)
+            };
+        }
+        
+        function copyToClipboard(text, format) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification(`${format} copied!`);
+            });
+        }
+        
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+        
+        redSlider.addEventListener('input', updateColor);
+        greenSlider.addEventListener('input', updateColor);
+        blueSlider.addEventListener('input', updateColor);
+        alphaSlider.addEventListener('input', updateColor);
+        
+        updateColor();
+    </script>
+</body>
+</html>
